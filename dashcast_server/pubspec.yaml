@@ -1,7 +1,5 @@
 name: dashcast_server
-description: A web server built using the shelf package.
-# version: 1.0.0
-# homepage: https://www.example.com
+description: The server for the DashCast v2 sample app
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
@@ -9,6 +7,9 @@ environment:
 dependencies:
   args: ^1.6.0
   shelf: ^0.7.5
+  json_annotation: any
 
 dev_dependencies:
   pedantic: ^1.9.0
+  build_runner: any
+  json_serializable: any
