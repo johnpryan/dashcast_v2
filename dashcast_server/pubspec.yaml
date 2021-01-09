@@ -9,9 +9,11 @@ dependencies:
   shelf: ^0.7.5
   json_annotation: any
   shelf_router: any
+  xml: any
 
 dev_dependencies:
   pedantic: ^1.9.0
   build_runner: any
   json_serializable: any
   shelf_router_generator: any
+  http: any

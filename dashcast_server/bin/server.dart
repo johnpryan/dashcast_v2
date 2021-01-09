@@ -4,7 +4,7 @@ import 'package:args/args.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 
-import 'package:dashcast_server/routes.dart';
+import 'package:dashcast_server/src/routes.dart';
 
 const _hostname = 'localhost';
 
@@ -24,7 +24,7 @@ void main(List<String> args) async {
 
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
-      .addHandler(MyService().router.handler);
+      .addHandler(DashcastService().router);
 
   var server = await io.serve(handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');

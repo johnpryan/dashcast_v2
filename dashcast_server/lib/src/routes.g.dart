@@ -6,9 +6,9 @@ part of 'routes.dart';
 // ShelfRouterGenerator
 // **************************************************************************
 
-Router _$MyServiceRouter(MyService service) {
+Router _$DashcastServiceRouter(DashcastService service) {
   final router = Router();
   router.add('GET', r'/', service.index);
-  router.add('GET', r'/users/<userId>', service.user);
+  router.add('GET', r'/all', service.all);
   return router;
 }
