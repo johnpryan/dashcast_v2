@@ -169,6 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  http_methods:
+    dependency: transitive
+    description:
+      name: http_methods
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -316,6 +323,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.9"
+  shelf_router:
+    dependency: "direct main"
+    description:
+      name: shelf_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.4"
+  shelf_router_generator:
+    dependency: "direct dev"
+    description:
+      name: shelf_router_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.2+4"
   shelf_web_socket:
     dependency: transitive
     description:
