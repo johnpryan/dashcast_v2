@@ -55,3 +55,18 @@ Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
       'title': instance.title,
       'audioUrl': instance.audioUrl,
     };
+
+PodcastListResponse _$PodcastListResponseFromJson(Map<String, dynamic> json) {
+  return PodcastListResponse(
+    podcasts: (json['podcasts'] as List)
+        ?.map((e) =>
+            e == null ? null : Podcast.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$PodcastListResponseToJson(
+        PodcastListResponse instance) =>
+    <String, dynamic>{
+      'podcasts': instance.podcasts,
+    };

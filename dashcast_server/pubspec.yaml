@@ -6,6 +6,7 @@ environment:
 
 dependencies:
   args: ^1.6.0
+  path: ^1.7.0
   shelf: ^0.7.5
   json_annotation: any
   shelf_router: any

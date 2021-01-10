@@ -59,3 +59,15 @@ class Episode {
 
   Map<String, dynamic> toJson() => _$EpisodeToJson(this);
 }
+
+@JsonSerializable()
+class PodcastListResponse {
+  final List<Podcast> podcasts;
+
+  PodcastListResponse({this.podcasts});
+
+  factory PodcastListResponse.fromJson(Map<String, dynamic> json) =>
+      _$PodcastListResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PodcastListResponseToJson(this);
+}
