@@ -23,7 +23,7 @@ Future main(List<String> parameters) async {
     episodes.add(e);
   }
 
-  var podcast = Podcast(
+  var podcast = PodcastDetails(
       id: 0,
       title: podcastXml.title,
       rssFeedUrl: uri.toString(),

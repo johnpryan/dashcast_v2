@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -6,9 +8,12 @@ import '../models.dart';
 part 'routes.g.dart';
 
 class DashcastService {
-  List<Podcast> podcasts = [
-    // Podcast(id: 0, title: 'The Daily', imageUrl: ),
-  ];
+  final List<PodcastDetails> podcasts;
+  final List<Podcast> allPodcasts;
+
+  DashcastService(this.podcasts)
+      : allPodcasts =
+            podcasts.map((details) => Podcast.fromDetails(details)).toList();
 
   Router get router => _$DashcastServiceRouter(this);
 
@@ -19,6 +24,13 @@ class DashcastService {
 
   @Route.get('/all')
   Future<Response> all(Request request) async {
-    return Response(200, body: 'all', headers: {});
+    return Response(200, body: json.encode(allPodcasts), headers: {});
+  }
+
+  @Route.get('/podcast/<id>')
+  Future<Response> getPodcastDetails(Request request, String id) async {
+    return Response(200,
+        body: json.encode(podcasts.firstWhere((p) => '${p.id}' == id)),
+        headers: {'Content-Type': 'application/json'});
   }
 }

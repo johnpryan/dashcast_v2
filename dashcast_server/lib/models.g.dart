@@ -10,8 +10,22 @@ Podcast _$PodcastFromJson(Map<String, dynamic> json) {
   return Podcast(
     id: json['id'] as int,
     title: json['title'] as String,
-    rssFeedUrl: json['rssFeedUrl'] as String,
     imageUrl: json['imageUrl'] as String,
+  );
+}
+
+Map<String, dynamic> _$PodcastToJson(Podcast instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'imageUrl': instance.imageUrl,
+    };
+
+PodcastDetails _$PodcastDetailsFromJson(Map<String, dynamic> json) {
+  return PodcastDetails(
+    id: json['id'] as int,
+    title: json['title'] as String,
+    imageUrl: json['imageUrl'] as String,
+    rssFeedUrl: json['rssFeedUrl'] as String,
     episodes: (json['episodes'] as List)
         ?.map((e) =>
             e == null ? null : Episode.fromJson(e as Map<String, dynamic>))
@@ -19,7 +33,8 @@ Podcast _$PodcastFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PodcastToJson(Podcast instance) => <String, dynamic>{
+Map<String, dynamic> _$PodcastDetailsToJson(PodcastDetails instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'imageUrl': instance.imageUrl,

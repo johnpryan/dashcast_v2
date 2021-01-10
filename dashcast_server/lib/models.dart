@@ -10,20 +10,36 @@ class Podcast {
 
   final String imageUrl;
 
+  Podcast({
+    this.id,
+    this.title,
+    this.imageUrl,
+  });
+
+  factory Podcast.fromDetails(PodcastDetails details) =>
+      Podcast(id: details.id, title: details.title, imageUrl: details.imageUrl);
+
+  factory Podcast.fromJson(Map<String, dynamic> json) =>
+      _$PodcastFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PodcastToJson(this);
+}
+
+@JsonSerializable()
+class PodcastDetails extends Podcast {
   final String rssFeedUrl;
 
   final List<Episode> episodes;
 
-  Podcast({
-    this.id,
-    this.title,
-    this.rssFeedUrl,
-    this.imageUrl,
-    this.episodes,
-  });
+  PodcastDetails(
+      {int id, String title, String imageUrl, this.rssFeedUrl, this.episodes})
+      : super(id: id, title: title, imageUrl: imageUrl);
 
-  factory Podcast.fromJson(Map<String, dynamic> json) => _$PodcastFromJson(json);
-  Map<String, dynamic> toJson() => _$PodcastToJson(this);
+  factory PodcastDetails.fromJson(Map<String, dynamic> json) =>
+      _$PodcastDetailsFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$PodcastDetailsToJson(this);
 }
 
 @JsonSerializable()
@@ -38,7 +54,8 @@ class Episode {
     this.audioUrl,
   });
 
-  factory Episode.fromJson(Map<String, dynamic> json) => _$EpisodeFromJson(json);
+  factory Episode.fromJson(Map<String, dynamic> json) =>
+      _$EpisodeFromJson(json);
 
   Map<String, dynamic> toJson() => _$EpisodeToJson(this);
 }

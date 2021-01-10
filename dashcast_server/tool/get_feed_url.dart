@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 /// for example:
 /// "id1444919174"
 /// "https://podcasts.apple.com/us/podcast/its-all-widgets-flutter-podcast/id1444919174"
-main(List<String> parameters) async {
+Future main(List<String> parameters) async {
   if (parameters.length != 1) {
     print('usage: dart get_feed_url.dart <Apple Podcasts id or URL>');
     exit(1);

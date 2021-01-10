@@ -9,8 +9,8 @@ class PodcastXml {
   /// The podcast title
   String get title => _channel.findElements('title').first.text;
 
-  // TODO
-  String get imageUrl => '';
+  String get imageUrl =>
+      _channel.findElements('image').first.findElements('url').first.text;
 
   List<EpisodeXml> get episodes {
     return _channel.findElements('item').map((n) => EpisodeXml(n)).toList();

@@ -10,5 +10,6 @@ Router _$DashcastServiceRouter(DashcastService service) {
   final router = Router();
   router.add('GET', r'/', service.index);
   router.add('GET', r'/all', service.all);
+  router.add('GET', r'/podcast/<id>', service.getPodcastDetails);
   return router;
 }
