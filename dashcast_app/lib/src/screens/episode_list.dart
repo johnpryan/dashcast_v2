@@ -1,9 +1,9 @@
-import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import '../api.dart';
+import '../widgets/podcast_image.dart';
+import '../widgets/transparent_app_bar.dart';
 import 'episode_details.dart';
 
 class EpisodeListScreen extends StatefulWidget {
@@ -42,10 +42,9 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
           itemBuilder: (context, idx) {
             var episode = podcastDetails.episodes[idx];
             return ListTile(
-              leading: FadeInImage(
-                placeholder: Image.memory(kTransparentImage).image,
-                image: NetworkImage(
-                    widget.api.getImageUri(podcastDetails.id)),
+              leading: PodcastImage(
+                api: widget.api,
+                podcast: podcastDetails,
               ),
               title: Text(episode.title),
               onTap: () => _showEpisodeDetails(podcastDetails, episode),
@@ -57,7 +56,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
     );
   }
 
-  Future<PodcastDetails> _loadDetails() async {
+  Future _loadDetails() async {
     setState(() {
       loading = true;
     });
@@ -73,6 +72,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
       MaterialPageRoute(
         builder: (context) {
           return EpisodeDetailsScreen(
+            api: widget.api,
             podcast: podcast,
             episode: episode,
           );
