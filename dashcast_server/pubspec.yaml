@@ -11,6 +11,7 @@ dependencies:
   json_annotation: any
   shelf_router: any
   xml: any
+  pedantic: any
 
 dev_dependencies:
   pedantic: ^1.9.0
