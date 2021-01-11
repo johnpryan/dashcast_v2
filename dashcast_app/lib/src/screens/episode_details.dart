@@ -1,3 +1,4 @@
+import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,9 @@ class EpisodeDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: TransparentAppBar(),
+      body: Center(child: Text('${podcast.title} - ${episode.title}'),),
+    );
   }
 }
