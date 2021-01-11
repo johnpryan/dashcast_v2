@@ -34,6 +34,13 @@ class DashcastApi {
         .replace(path: path.join('podcast', '$id', 'image'))
         .toString();
   }
+
+  String getAudioUrl(int id, int episodeId) {
+    return baseUri
+        .replace(
+            path: path.join('podcast', '$id', 'episode', '$episodeId', 'audio'))
+        .toString();
+  }
 }
 
 class DashcastApiException implements Exception {

@@ -12,5 +12,7 @@ Router _$DashcastServiceRouter(DashcastService service) {
   router.add('GET', r'/all', service.all);
   router.add('GET', r'/podcast/<id>', service.getPodcastDetails);
   router.add('GET', r'/podcast/<id>/image', service.getPodcastImage);
+  router.add('GET', r'/podcast/<id>/episode/<episodeId>/audio',
+      service.getPodcastAudio);
   return router;
 }

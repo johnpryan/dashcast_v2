@@ -5,6 +5,7 @@ import 'package:dashcast_server/models.dart';
 
 import '../widgets/podcast_image.dart';
 import '../widgets/transparent_app_bar.dart';
+import '../widgets/audio_player.dart';
 
 class EpisodeDetailsScreen extends StatelessWidget {
   final DashcastApi api;
@@ -26,6 +27,7 @@ class EpisodeDetailsScreen extends StatelessWidget {
           children: [
             Text('${podcast.title} - ${episode.title}'),
             PodcastImage(api: api, podcast: podcast),
+            AudioPlayer(audioUrl: api.getAudioUrl(podcast.id, episode.id)),
           ],
         ),
       ),

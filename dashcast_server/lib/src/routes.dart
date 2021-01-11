@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
+import 'package:http/http.dart' as http;
 
 import '../models.dart';
 
@@ -48,5 +49,23 @@ class DashcastService {
         body: await file.readAsBytes(),
         headers: Map.from(_defaultHeaders)
           ..addAll({'Content-Type': 'image/jpeg'}));
+  }
+
+  @Route.get('/podcast/<id>/episode/<episodeId>/audio')
+  Future<Response> getPodcastAudio(
+      Request request, String id, String episodeId) async {
+    var sourceUrl = podcasts.firstWhere((p) => p.id == int.parse(id))
+        .episodes
+        .firstWhere((e) => e.id == int.parse(episodeId))
+        .audioUrl;
+    // var streamedResponse = await http.Client()
+    //     .send(http.StreamedRequest('GET', Uri.parse(sourceUrl)));
+    // print('got streamedResponse $streamedResponse');
+    var response = await http.get(sourceUrl);
+    return Response(200,
+        body: response.bodyBytes,
+        headers: Map.from(_defaultHeaders)
+          ..addAll({'Content-Type': 'Content-Type: audio/mpeg'}
+            ..addAll(response.headers)));
   }
 }
