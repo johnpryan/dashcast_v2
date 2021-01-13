@@ -55,8 +55,10 @@ class _AudioPlayerState extends State<AudioPlayer> {
   }
 
   void dispose() {
-    sound.thePlayer.closeAudioSession();
-    playerSubscription.cancel();
+    if (sound.thePlayer.isOpen()) {
+      sound.thePlayer.closeAudioSession();
+    }
+    playerSubscription?.cancel();
     super.dispose();
   }
 

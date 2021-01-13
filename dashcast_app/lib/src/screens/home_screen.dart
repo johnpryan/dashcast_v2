@@ -1,21 +1,24 @@
+import 'package:dashcast_app/src/screens/podcast_list.dart';
+import 'package:dashcast_app/src/widgets/podcast_row.dart';
+import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
 
 import '../api.dart';
-import '../widgets/podcast_image.dart';
-import '../widgets/transparent_app_bar.dart';
 import 'episode_list.dart';
 
-class PodcastListScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   final DashcastApi api;
 
-  PodcastListScreen(this.api);
+  HomeScreen({
+    this.api,
+  });
 
   @override
-  _PodcastListScreenState createState() => _PodcastListScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _PodcastListScreenState extends State<PodcastListScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   bool loading;
   List<Podcast> podcasts;
 
@@ -36,22 +39,18 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: ListView.builder(
-        itemBuilder: (context, idx) {
-          var podcast = podcasts[idx];
-          return ListTile(
-            leading: PodcastImage(
-              api: widget.api,
-              podcast: podcast,
-              thumbnail: true,
+      body: Column(
+        children: [
+          PodcastRow(
+            api: widget.api,
+            podcasts: podcasts,
+            onSelected: (podcast) => _showDetails(context, podcast),
+            actionLabel: TextButton(
+              onPressed: _handleSeeAll,
+              child: Text('See all'),
             ),
-            title: Text(podcast.title),
-            onTap: () {
-              _showDetails(context, podcast);
-            },
-          );
-        },
-        itemCount: podcasts.length,
+          ),
+        ],
       ),
     );
   }
@@ -70,6 +69,12 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
   void _showDetails(BuildContext context, Podcast podcast) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return EpisodeListScreen(podcast.id, widget.api);
+    }));
+  }
+
+  void _handleSeeAll() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return PodcastListScreen(widget.api);
     }));
   }
 }

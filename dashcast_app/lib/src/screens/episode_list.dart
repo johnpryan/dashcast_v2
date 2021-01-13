@@ -45,6 +45,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
               leading: PodcastImage(
                 api: widget.api,
                 podcast: podcastDetails,
+                thumbnail: true,
               ),
               title: Text(episode.title),
               onTap: () => _showEpisodeDetails(podcastDetails, episode),

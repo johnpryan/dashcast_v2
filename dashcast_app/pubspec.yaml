@@ -14,6 +14,7 @@ dependencies:
   dashcast_server:
     path: ../dashcast_server
   flutter_sound: ^7.5.0
+  google_fonts: ^1.1.0
   http: ^0.12.0
   intl: ^0.16.0
   path: ^1.7.0
@@ -27,3 +28,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - google_fonts/

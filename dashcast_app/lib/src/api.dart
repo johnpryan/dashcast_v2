@@ -35,6 +35,12 @@ class DashcastApi {
         .toString();
   }
 
+  String getThumbnailUri(int id) {
+    return baseUri
+        .replace(path: path.join('podcast', '$id', 'thumbnail'))
+        .toString();
+  }
+
   String getAudioUrl(int id, int episodeId) {
     return baseUri
         .replace(

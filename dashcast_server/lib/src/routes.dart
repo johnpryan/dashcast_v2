@@ -18,8 +18,9 @@ class DashcastService {
   final List<PodcastDetails> podcasts;
   final List<Podcast> allPodcasts;
   final Map<int, File> imageFiles;
+  final Map<int, File> thumbnails;
 
-  DashcastService(this.podcasts, this.imageFiles)
+  DashcastService(this.podcasts, this.imageFiles, this.thumbnails)
       : allPodcasts =
             podcasts.map((details) => Podcast.fromDetails(details)).toList();
 
@@ -48,10 +49,21 @@ class DashcastService {
   @Route.get('/podcast/<id>/image')
   Future<Response> getPodcastImage(Request request, String id) async {
     var file = imageFiles[int.parse(id)];
+
     return Response(200,
         body: await file.readAsBytes(),
         headers: Map.from(_defaultHeaders)
-          ..addAll({'Content-Type': 'image/jpeg'}));
+          ..addAll({'Content-Type': _imageContentType(file)}));
+  }
+
+  @Route.get('/podcast/<id>/thumbnail')
+  Future<Response> getPodcastThumbnail(Request request, String id) async {
+    var file = thumbnails[int.parse(id)];
+
+    return Response(200,
+        body: await file.readAsBytes(),
+        headers: Map.from(_defaultHeaders)
+          ..addAll({'Content-Type': _imageContentType(file)}));
   }
 
   @Route.get('/podcast/<id>/episode/<episodeId>/audio')
@@ -118,6 +130,15 @@ void _addHeader(Map<String, String> headers, String name, String value) {
     headers[name] += ', $value';
   } else {
     headers[name] = value;
+  }
+}
+
+String _imageContentType(File file) {
+  var extension = path.extension(file.path);
+  if (extension == '.jpg' || extension == '.jpeg') {
+    return 'image/jpeg';
+  } else {
+    return 'image/png';
   }
 }
 

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
+import 'package:image/image.dart';
 
 const _hostname = 'localhost';
 
@@ -45,11 +46,15 @@ void main(List<String> args) async {
   print('loading podcasts...');
   var podcasts = await _loadPodcasts(podcastUrls);
 
+  print('downloading images...');
   var imageFiles = await _downloadImages(podcasts);
+
+  print('creating thumbnails...');
+  var thumbnails = await _createThumbnails(imageFiles);
 
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
-      .addHandler(DashcastService(podcasts, imageFiles).router);
+      .addHandler(DashcastService(podcasts, imageFiles, thumbnails).router);
 
   var server = await io.serve(handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');
@@ -105,8 +110,49 @@ Future<Map<int, File>> _downloadImages(List<Podcast> podcasts) async {
 }
 
 Future<File> _downloadImage(Directory dir, Podcast podcast) async {
-  var file = File(path.join(dir.path, '${podcast.id}.jpg'));
+  var extension = path.extension(Uri.parse(podcast.imageUrl).path);
   var image = await http.get(podcast.imageUrl);
+  var file = File(path.join(dir.path, '${podcast.id}${extension}'));
   await file.writeAsBytes(image.bodyBytes);
   return file;
 }
+
+Future<Map<int, File>> _createThumbnails(Map<int, File> images) async {
+  var dir =
+      Directory(path.join(Directory.systemTemp.path, 'dashcast', 'thumbnails'));
+  await dir.create();
+  var thumbnails = <int, File>{};
+  for (var id in images.keys) {
+    var sourceFile = images[id];
+    thumbnails[id] = await _createThumbnail(id, sourceFile, dir);
+  }
+  return thumbnails;
+}
+
+Future<File> _createThumbnail(int id, File source, Directory directory) async {
+  var bytes = await source.readAsBytes();
+
+  Image image;
+  if (_isJpeg(source)) {
+    image = readJpg(bytes);
+  } else if (_isPng(source)) {
+    image = readPng(bytes);
+  } else {
+    throw ('Unknown image type: ${source.path}');
+  }
+
+  var thumbnail = copyResize(image, width: 200);
+  var thumbnailFile =
+      File(path.join(directory.path, '${id}_thumb${_extension(source)}'));
+  var thumbnailBytes =
+      _isJpeg(source) ? writeJpg(thumbnail) : writePng(thumbnail);
+  await thumbnailFile.writeAsBytes(thumbnailBytes);
+  return thumbnailFile;
+}
+
+String _extension(File file) => path.extension(file.path);
+
+bool _isJpeg(File file) =>
+    _extension(file) == '.jpg' || _extension(file) == '.jpeg';
+
+bool _isPng(File file) => _extension(file) == '.png';
