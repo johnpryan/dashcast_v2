@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'dart:math' as math;
 import 'package:dashcast_app/src/widgets/duration_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -22,6 +23,7 @@ class _AudioPlayerState extends State<AudioPlayer> {
   bool playing = false;
   Duration playbackPosition = Duration.zero;
   Duration playbackDuration = Duration.zero;
+  bool isLoading = false;
 
   void initState() {
     super.initState();
@@ -36,17 +38,48 @@ class _AudioPlayerState extends State<AudioPlayer> {
       children: [
         Row(
           children: [
-            DurationLabel(duration: playbackPosition),
-            Expanded(child: LinearProgressIndicator(value: progress)),
-            DurationLabel(duration: playbackDuration),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DurationLabel(duration: playbackPosition),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    LinearProgressIndicator(value: isLoading ? null : progress),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DurationLabel(duration: playbackDuration),
+            ),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: playing ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-              onPressed: () => _playPause(),
+            ...[
+              IconButton(
+                icon: Icon(Icons.replay_10),
+                onPressed: !isLoading && playbackPosition != null
+                    ? () => _replay10()
+                    : null,
+              ),
+              IconButton(
+                icon: playing ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+                onPressed: !isLoading ? () => _playPause() : null,
+              ),
+              IconButton(
+                icon: Icon(Icons.forward_10),
+                onPressed: !isLoading && playbackPosition != null
+                    ? () => _forward10()
+                    : null,
+              )
+            ].map(
+              (child) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: child,
+              ),
             )
           ],
         ),
@@ -63,11 +96,16 @@ class _AudioPlayerState extends State<AudioPlayer> {
   }
 
   Future _playPause() async {
-    print('loading ${widget.audioUrl}');
     if (!playing && !sound.thePlayer.isOpen()) {
+      setState(() {
+        isLoading = true;
+      });
       await sound.thePlayer.openAudioSession();
       await sound.thePlayer.setSubscriptionDuration(Duration(milliseconds: 10));
       await sound.thePlayer.startPlayer(fromURI: widget.audioUrl);
+      setState(() {
+        isLoading = false;
+      });
       playerSubscription = sound.thePlayer.onProgress.listen(_updateProgress);
     } else if (!playing && sound.thePlayer != null) {
       await sound.thePlayer.resumePlayer();
@@ -76,6 +114,27 @@ class _AudioPlayerState extends State<AudioPlayer> {
     }
     setState(() {
       playing = !playing;
+    });
+  }
+
+  void _replay10() {
+    var positionMinus10 = playbackPosition - Duration(seconds: 10);
+    var newLocationSeconds = math.max(positionMinus10.inSeconds, 0);
+    _seek(Duration(seconds: newLocationSeconds));
+  }
+
+  void _forward10() {
+    var positionPlus10 = playbackPosition + Duration(seconds: 10);
+    var newLocationSeconds =
+        math.min(positionPlus10.inSeconds, playbackDuration.inSeconds);
+    _seek(Duration(seconds: newLocationSeconds));
+  }
+
+  Future _seek(Duration newLocation) async {
+    await sound.thePlayer.seekToPlayer(newLocation);
+
+    setState(() {
+      playbackPosition = newLocation;
     });
   }
 
@@ -88,6 +147,3 @@ class _AudioPlayerState extends State<AudioPlayer> {
     });
   }
 }
-
-
-

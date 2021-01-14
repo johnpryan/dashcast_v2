@@ -1,4 +1,5 @@
 import 'package:dashcast_app/src/screens/podcast_list.dart';
+import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_app/src/widgets/podcast_row.dart';
 import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
@@ -39,18 +40,20 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: Column(
-        children: [
-          PodcastRow(
-            api: widget.api,
-            podcasts: podcasts,
-            onSelected: (podcast) => _showDetails(context, podcast),
-            actionLabel: TextButton(
-              onPressed: _handleSeeAll,
-              child: Text('See all'),
+      body: CenterScrollable(
+        child: Column(
+          children: [
+            PodcastRow(
+              api: widget.api,
+              podcasts: podcasts,
+              onSelected: (podcast) => _showDetails(context, podcast),
+              actionLabel: TextButton(
+                onPressed: _handleSeeAll,
+                child: Text('See all'),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

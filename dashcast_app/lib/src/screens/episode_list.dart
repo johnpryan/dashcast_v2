@@ -1,10 +1,11 @@
+import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
 
 import '../api.dart';
 import '../widgets/podcast_image.dart';
 import '../widgets/transparent_app_bar.dart';
-import 'episode_details.dart';
+import 'episode_screen.dart';
 
 class EpisodeListScreen extends StatefulWidget {
   final int podcastId;
@@ -37,7 +38,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: Scrollbar(
+      body: CenterScrollable(
         child: ListView.builder(
           itemBuilder: (context, idx) {
             var episode = podcastDetails.episodes[idx];
@@ -72,7 +73,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return EpisodeDetailsScreen(
+          return EpisodeScreen(
             api: widget.api,
             podcast: podcast,
             episode: episode,
