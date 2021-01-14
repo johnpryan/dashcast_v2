@@ -10,7 +10,7 @@ import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:image/image.dart';
 
-const _hostname = 'localhost';
+const _hostname = '0.0.0.0';
 
 void main(List<String> args) async {
   var parser = ArgParser()..addOption('port', abbr: 'p');
@@ -45,17 +45,21 @@ void main(List<String> args) async {
 
   print('loading podcasts...');
   var podcasts = await _loadPodcasts(podcastUrls);
+  print('done loading podcasts.');
 
   print('downloading images...');
   var imageFiles = await _downloadImages(podcasts);
+  print('done downloading images.');
 
   print('creating thumbnails...');
   var thumbnails = await _createThumbnails(imageFiles);
+  print('done creating thumbnails.');
 
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
       .addHandler(DashcastService(podcasts, imageFiles, thumbnails).router);
 
+  print('Starting server at http://${_hostname}:${port}');
   var server = await io.serve(handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');
 }

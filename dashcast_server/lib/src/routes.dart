@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:pedantic/pedantic.dart';
 import 'package:path/path.dart' as path;
 
-
 import '../models.dart';
 
 part 'routes.g.dart';
@@ -110,7 +109,7 @@ class DashcastService {
     if (clientResponse.isRedirect &&
         clientResponse.headers.containsKey('location')) {
       var location =
-      requestUrl.resolve(clientResponse.headers['location']).toString();
+          requestUrl.resolve(clientResponse.headers['location']).toString();
       if (path.url.isWithin(sourceUri.toString(), location)) {
         clientResponse.headers['location'] =
             '/' + path.url.relative(location, from: sourceUri.toString());
@@ -121,7 +120,7 @@ class DashcastService {
 
     return Response(200,
         body: clientResponse.stream,
-        headers: clientResponse.headers);
+        headers: Map.from(_defaultHeaders)..addAll(clientResponse.headers));
   }
 }
 
@@ -141,4 +140,3 @@ String _imageContentType(File file) {
     return 'image/png';
   }
 }
-
