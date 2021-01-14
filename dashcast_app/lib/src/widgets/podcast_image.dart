@@ -26,9 +26,9 @@ class PodcastImage extends StatelessWidget {
           children: [
             FadeInImage(
               placeholder: Image.memory(kTransparentImage).image,
-              image: NetworkImage(thumbnail
-                  ? api.getThumbnailUri(podcast.id)
-                  : api.getImageUri(podcast.id)),
+              image: NetworkImage(thumbnail == null
+                  ? api.getImageUri(podcast.id)
+                  : api.getThumbnailUri(podcast.id)),
             ),
             Positioned.fill(
               child: Material(
