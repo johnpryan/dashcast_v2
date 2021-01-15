@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'screens/home_screen.dart';
 
-Uri serverUri = Uri.parse('https://dashcast.net/');
+// final serverUri = Uri.parse('http://localhost:8080');
+final serverUri = Uri.parse('https://dashcast.net/');
 
 class DashcastApp extends StatefulWidget {
   @override
