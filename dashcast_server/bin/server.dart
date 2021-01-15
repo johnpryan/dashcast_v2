@@ -8,13 +8,23 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
+import 'package:shelf_helpers/shelf_helpers.dart' show cors;
 import 'package:image/image.dart';
 
 const _hostname = '0.0.0.0';
 
+const _corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers':
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+};
+
 void main(List<String> args) async {
   var parser = ArgParser()..addOption('port', abbr: 'p');
   var result = parser.parse(args);
+
+  print("PORT environment variable = ${Platform.environment['PORT']}");
 
   // Use the PORT environment variable if it's defined.
   var portStr = result['port'] ?? Platform.environment['PORT'] ?? '80';
@@ -57,6 +67,7 @@ void main(List<String> args) async {
 
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
+      .addMiddleware(cors(headers: _corsHeaders))
       .addHandler(DashcastService(podcasts, imageFiles, thumbnails).router);
 
   print('Starting server at http://${_hostname}:${port}');

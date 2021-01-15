@@ -1,5 +1,7 @@
 FROM google/dart
 
+ENV PORT 80
+
 WORKDIR /app
 
 ADD pubspec.* /app/

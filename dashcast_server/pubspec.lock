@@ -351,6 +351,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.9"
+  shelf_helpers:
+    dependency: "direct main"
+    description:
+      name: shelf_helpers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-alpha.1"
   shelf_router:
     dependency: "direct main"
     description:

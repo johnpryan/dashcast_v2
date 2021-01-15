@@ -11,8 +11,6 @@ import '../models.dart';
 
 part 'routes.g.dart';
 
-Map<String, String> _defaultHeaders = {'Access-Control-Allow-Origin': '*'};
-
 class DashcastService {
   final List<PodcastDetails> podcasts;
   final List<Podcast> allPodcasts;
@@ -27,22 +25,20 @@ class DashcastService {
 
   @Route.get('/')
   Future<Response> index(Request request) async {
-    return Response(200, body: 'DashCast', headers: _defaultHeaders);
+    return Response(200, body: 'DashCast');
   }
 
   @Route.get('/all')
   Future<Response> all(Request request) async {
     return Response(200,
-        body: json.encode(PodcastListResponse(podcasts: allPodcasts)),
-        headers: _defaultHeaders);
+        body: json.encode(PodcastListResponse(podcasts: allPodcasts)));
   }
 
   @Route.get('/podcast/<id>')
   Future<Response> getPodcastDetails(Request request, String id) async {
     return Response(200,
         body: json.encode(podcasts.firstWhere((p) => '${p.id}' == id)),
-        headers: Map.from(_defaultHeaders)
-          ..addAll({'Content-Type': 'application/json'}));
+        headers: {'Content-Type': 'application/json'});
   }
 
   @Route.get('/podcast/<id>/image')
@@ -51,8 +47,7 @@ class DashcastService {
 
     return Response(200,
         body: await file.readAsBytes(),
-        headers: Map.from(_defaultHeaders)
-          ..addAll({'Content-Type': _imageContentType(file)}));
+        headers: {'Content-Type': _imageContentType(file)});
   }
 
   @Route.get('/podcast/<id>/thumbnail')
@@ -61,8 +56,7 @@ class DashcastService {
 
     return Response(200,
         body: await file.readAsBytes(),
-        headers: Map.from(_defaultHeaders)
-          ..addAll({'Content-Type': _imageContentType(file)}));
+        headers: {'Content-Type': _imageContentType(file)});
   }
 
   @Route.get('/podcast/<id>/episode/<episodeId>/audio')
@@ -120,7 +114,7 @@ class DashcastService {
 
     return Response(200,
         body: clientResponse.stream,
-        headers: Map.from(_defaultHeaders)..addAll(clientResponse.headers));
+        headers: clientResponse.headers);
   }
 }
 
