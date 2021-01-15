@@ -17,7 +17,7 @@ void main(List<String> args) async {
   var result = parser.parse(args);
 
   // Use the PORT environment variable if it's defined.
-  var portStr = result['port'] ?? Platform.environment['PORT'] ?? '8080';
+  var portStr = result['port'] ?? Platform.environment['PORT'] ?? '80';
   var port = int.tryParse(portStr);
 
   if (port == null) {
