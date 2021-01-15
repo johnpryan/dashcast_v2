@@ -10,12 +10,15 @@ PODS:
   - path_provider (0.0.1):
     - Flutter
   - "tau_sound_core (7.5.1+2)"
+  - url_launcher (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
   trunk:
@@ -31,6 +34,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
@@ -39,6 +44,7 @@ SPEC CHECKSUMS:
   mobile-ffmpeg-audio: adc36047b8032bc0f8e5c4e6ab7cb110189d9b37
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   tau_sound_core: 3653b154a8804ea466c3f383e3e7453df8603e61
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
 

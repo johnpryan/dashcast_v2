@@ -12,6 +12,9 @@ class PodcastXml {
   String get imageUrl =>
       _channel.findElements('image').first.findElements('url').first.text;
 
+  String get link =>
+      _channel.findElements('link').first.text;
+
   List<EpisodeXml> get episodes {
     return _channel.findElements('item').map((n) => EpisodeXml(n)).toList();
   }

@@ -89,7 +89,10 @@ Future<List<PodcastDetails>> _loadPodcasts(List<String> podcastUrls) async {
   var id = 0;
   for (var podcastUrl in podcastUrls) {
     pendingRequests.add(Future(() async {
-      podcasts.add(await _loadPodcast(podcastUrl, id++));
+      var podcast = await _loadPodcast(podcastUrl, id++);
+      if (podcast != null) {
+        podcasts.add(podcast);
+      }
     }));
   }
 
@@ -99,23 +102,28 @@ Future<List<PodcastDetails>> _loadPodcasts(List<String> podcastUrls) async {
 
 Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
   print('Fetching RSS: $podcastUrl');
-  var httpResponse = await http.get(podcastUrl);
-  var podcastXml = PodcastXml(httpResponse.body);
-  var episodes = <Episode>[];
-  for (var i = 0; i < podcastXml.episodes.length; i++) {
-    var episodeXml = podcastXml.episodes[i];
-    var e =
-        Episode(id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
-    episodes.add(e);
-  }
+  try {
+    var httpResponse = await http.get(podcastUrl);
+    var podcastXml = PodcastXml(httpResponse.body);
+    var episodes = <Episode>[];
+    for (var i = 0; i < podcastXml.episodes.length; i++) {
+      var episodeXml = podcastXml.episodes[i];
+      var e =
+      Episode(id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
+      episodes.add(e);
+    }
 
-  var podcast = PodcastDetails(
-      id: id,
-      title: podcastXml.title,
-      rssFeedUrl: podcastUrl,
-      imageUrl: podcastXml.imageUrl,
-      episodes: episodes);
-  return podcast;
+    var podcast = PodcastDetails(
+        id: id,
+        title: podcastXml.title,
+        rssFeedUrl: podcastUrl,
+        imageUrl: podcastXml.imageUrl,
+        link: podcastXml.link,
+        episodes: episodes);
+    return podcast;
+  } catch(e) {
+    print('error loading podcast: $podcastUrl');
+  }
 }
 
 Future<Map<int, File>> _downloadImages(List<Podcast> podcasts) async {

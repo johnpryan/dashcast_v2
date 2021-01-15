@@ -10,14 +10,20 @@ class Podcast {
 
   final String imageUrl;
 
+  final String link;
+
   Podcast({
     this.id,
     this.title,
     this.imageUrl,
+    this.link,
   });
 
-  factory Podcast.fromDetails(PodcastDetails details) =>
-      Podcast(id: details.id, title: details.title, imageUrl: details.imageUrl);
+  factory Podcast.fromDetails(PodcastDetails details) => Podcast(
+      id: details.id,
+      title: details.title,
+      imageUrl: details.imageUrl,
+      link: details.link);
 
   factory Podcast.fromJson(Map<String, dynamic> json) =>
       _$PodcastFromJson(json);
@@ -31,9 +37,14 @@ class PodcastDetails extends Podcast {
 
   final List<Episode> episodes;
 
-  PodcastDetails(
-      {int id, String title, String imageUrl, this.rssFeedUrl, this.episodes})
-      : super(id: id, title: title, imageUrl: imageUrl);
+  PodcastDetails({
+    int id,
+    String title,
+    String imageUrl,
+    String link,
+    this.rssFeedUrl,
+    this.episodes,
+  }) : super(id: id, title: title, imageUrl: imageUrl, link: link);
 
   factory PodcastDetails.fromJson(Map<String, dynamic> json) =>
       _$PodcastDetailsFromJson(json);

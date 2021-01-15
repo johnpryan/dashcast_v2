@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:dashcast_server/models.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/link.dart';
 
 import '../widgets/podcast_image.dart';
 import '../widgets/transparent_app_bar.dart';
@@ -51,19 +52,31 @@ class EpisodeScreen extends StatelessWidget {
               // TODO: link widget
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '${podcast.title}',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.openSans().copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.blue,
-                  ),
+                child: Link(
+                  uri: Uri.parse(podcast.link),
+                  builder: (context, followLink) {
+                    return TextButton(
+                      onPressed: followLink,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${podcast.title}',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.openSans().copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AudioPlayer(audioUrl: api.getAudioUrl(podcast.id, episode.id)),
+                child: AudioPlayer(
+                    audioUrl: api.getAudioUrl(podcast.id, episode.id)),
               ),
             ],
           ),
