@@ -25,7 +25,13 @@ class DashcastService {
 
   @Route.get('/')
   Future<Response> index(Request request) async {
-    return Response(200, body: 'DashCast');
+    var scriptDir = path.dirname(Platform.script.path);
+    var projectDir = path.joinAll(path.split(scriptDir)..removeLast());
+    var file = await File(
+        path.join(projectDir, 'lib', 'src', 'static', 'index.html'));
+    return Response(200,
+        body: await file.readAsString(),
+        headers: {'Content-Type': 'text/html'});
   }
 
   @Route.get('/all')
@@ -113,8 +119,7 @@ class DashcastService {
     }
 
     return Response(200,
-        body: clientResponse.stream,
-        headers: clientResponse.headers);
+        body: clientResponse.stream, headers: clientResponse.headers);
   }
 }
 

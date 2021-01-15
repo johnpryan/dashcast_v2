@@ -7,6 +7,7 @@ import 'package:dashcast_server/src/util/xml.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 import 'package:shelf/shelf.dart' as shelf;
+import 'package:shelf_static/shelf_static.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_helpers/shelf_helpers.dart' show cors;
 import 'package:image/image.dart';
@@ -65,13 +66,20 @@ void main(List<String> args) async {
   var thumbnails = await _createThumbnails(imageFiles);
   print('done creating thumbnails.');
 
+  var scriptDir = path.dirname(Platform.script.path);
+  var projectDir = path.joinAll(path.split(scriptDir)..removeLast());
+  var staticDir = path.join(projectDir, 'lib', 'src', 'static');
+  var staticHandler =
+      createStaticHandler(staticDir, defaultDocument: 'index.html');
+
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
       .addMiddleware(cors(headers: _corsHeaders))
       .addHandler(DashcastService(podcasts, imageFiles, thumbnails).router);
+  var cascade = shelf.Cascade().add(staticHandler).add(handler);
 
   print('Starting server at http://${_hostname}:${port}');
-  var server = await io.serve(handler, _hostname, port);
+  var server = await io.serve(cascade.handler, _hostname, port);
   print('Serving at http://${server.address.host}:${server.port}');
 }
 

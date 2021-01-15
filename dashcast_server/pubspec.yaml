@@ -13,6 +13,7 @@ dependencies:
   xml: any
   pedantic: any
   image: any
+  shelf_static: any
   shelf_helpers: any
 
 dev_dependencies:
