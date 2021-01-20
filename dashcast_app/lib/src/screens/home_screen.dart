@@ -1,5 +1,6 @@
 import 'package:dashcast_app/src/screens/podcast_list.dart';
 import 'package:dashcast_app/src/widgets/center_scroll.dart';
+import 'package:dashcast_app/src/widgets/podcast_column.dart';
 import 'package:dashcast_app/src/widgets/podcast_row.dart';
 import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
@@ -45,11 +46,24 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             PodcastRow(
               api: widget.api,
+              label: 'Recommended',
               podcasts: podcasts,
               onSelected: (podcast) => _showDetails(context, podcast),
               actionLabel: TextButton(
                 onPressed: _handleSeeAll,
                 child: Text('See all'),
+              ),
+            ),
+            Expanded(
+              child: PodcastColumn(
+                api: widget.api,
+                label: "Dash's picks",
+                podcasts: podcasts,
+                onSelected: (podcast) => _showDetails(context, podcast),
+                actionLabel: TextButton(
+                  onPressed: _handleSeeAll,
+                  child: Text('See all'),
+                ),
               ),
             ),
           ],

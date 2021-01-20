@@ -1,4 +1,5 @@
 import 'package:dashcast_app/src/widgets/center_scroll.dart';
+import 'package:dashcast_app/src/widgets/podcast_list_tile.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
 
@@ -41,13 +42,9 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
         child: ListView.builder(
           itemBuilder: (context, idx) {
             var podcast = podcasts[idx];
-            return ListTile(
-              leading: PodcastImage(
-                api: widget.api,
-                podcast: podcast,
-                thumbnail: true,
-              ),
-              title: Text(podcast.title),
+            return PodcastListTile(
+              api: widget.api,
+              podcast: podcast,
               onTap: () {
                 _showDetails(context, podcast);
               },
