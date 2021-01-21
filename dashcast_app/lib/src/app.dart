@@ -7,7 +7,6 @@ import 'package:page_router/page_router.dart';
 import 'api.dart';
 import 'screens/episode_screen.dart';
 import 'screens/home_screen.dart';
-import 'widgets/fade_transition_page.dart';
 
 // final serverUri = Uri.parse('http://localhost:8080');
 final serverUri = Uri.parse('https://dashcast.net/');
@@ -27,24 +26,24 @@ class _DashcastAppState extends State<DashcastApp> {
 
     api = DashcastApi(serverUri);
     routerData = PageRouterData({
-      '/': (context, params) => FadeTransitionPage(
+      '/': (context, params) => MaterialPage(
             key: ValueKey('/'),
             child: HomeScreen(api: api),
           ),
-      '/all': (context, params) => FadeTransitionPage(
-            key: ValueKey('/users/:id'),
+      '/all': (context, params) => MaterialPage(
+            key: ValueKey('all'),
             child: PodcastListScreen(api),
           ),
-      '/podcast/:id': (context, params) => FadeTransitionPage(
-            key: ValueKey('/podcast/:id'),
+      '/podcast/:id': (context, params) => MaterialPage(
+            key: ValueKey('/podcast/${params[":id"]}'),
             child: EpisodeListScreen(
               int.tryParse(params[':id']),
               api,
             ),
           ),
-      '/podcast/:id/episode/:episodeId': (context, params) =>
-          FadeTransitionPage(
-            key: ValueKey('/podcast/:id/episode/:episodeId'),
+      '/podcast/:id/episode/:episodeId': (context, params) => MaterialPage(
+            key: ValueKey(
+                '/podcast/${params[":id"]}/episode/${params[":episodeId"]}'),
             child: EpisodeScreen(
               podcastId: int.tryParse(params[':id']),
               episodeId: int.tryParse(params[':episodeId']),
