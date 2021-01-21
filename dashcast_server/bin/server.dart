@@ -39,19 +39,41 @@ void main(List<String> args) async {
 
   var podcastUrls = [
     // The Daily
-    'http://rss.art19.com/the-daily',
+    // 'http://rss.art19.com/the-daily',
     // Sound Opinions
-    'https://feeds.simplecast.com/Nn6fjnB0',
+    // 'https://feeds.simplecast.com/Nn6fjnB0',
     // Stuff You Missed in History Class
-    'https://feeds.megaphone.fm/stuffyoumissedinhistoryclass',
+    // 'https://feeds.megaphone.fm/stuffyoumissedinhistoryclass',
     // Stuff You Should Know
-    'https://feeds.megaphone.fm/stuffyoushouldknow',
-    // The Moth
-    'http://feeds.feedburner.com/themothpodcast',
+    // 'https://feeds.megaphone.fm/stuffyoushouldknow',
     // Fresh Air
-    'https://feeds.npr.org/381444908/podcast.xml',
+    // 'https://feeds.npr.org/381444908/podcast.xml',
     // Planet Money
-    'https://feeds.npr.org/510289/podcast.xml',
+    // 'https://feeds.npr.org/510289/podcast.xml',
+
+    // It's All Widgets!
+    'https://itsallwidgets.com/podcast/feed',
+
+    // Talks at Google
+    'https://talksatgoogle.libsyn.com/rss',
+
+    // Kubernetes Podcast
+    'https://kubernetespodcast.com/feeds/audio.xml',
+
+    // The Firebase Podcast
+    'https://firebasepodcast.libsyn.com/rss',
+
+    // Google Cloud Platform Podcast
+    'https://feeds.feedburner.com/GcpPodcast',
+
+    // The State of the Web
+    'https://thestateoftheweb.libsyn.com/rss',
+
+    // The CSS Podcast
+    'https://thecsspodcast.libsyn.com/rss',
+
+    // Designer Vs Developer
+    'https://anchor.fm/s/ccd1534/podcast/rss',
   ];
 
   print('loading podcasts...');
@@ -97,7 +119,7 @@ Future<List<PodcastDetails>> _loadPodcasts(List<String> podcastUrls) async {
   }
 
   await Future.wait(pendingRequests);
-  return podcasts;
+  return podcasts..sort((a,b) => a.id.compareTo(b.id));
 }
 
 Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
