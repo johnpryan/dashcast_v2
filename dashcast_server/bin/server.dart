@@ -18,7 +18,9 @@ const _corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers':
-      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, '
+          'Content-Type, Access-Control-Request-Method, '
+          'Access-Control-Request-Headers'
 };
 
 void main(List<String> args) async {
@@ -119,7 +121,7 @@ Future<List<PodcastDetails>> _loadPodcasts(List<String> podcastUrls) async {
   }
 
   await Future.wait(pendingRequests);
-  return podcasts..sort((a,b) => a.id.compareTo(b.id));
+  return podcasts..sort((a, b) => a.id.compareTo(b.id));
 }
 
 Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
