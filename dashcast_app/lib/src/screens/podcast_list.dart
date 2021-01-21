@@ -2,9 +2,9 @@ import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_app/src/widgets/podcast_list_tile.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
+import 'package:page_router/page_router.dart';
 
 import '../api.dart';
-import '../widgets/podcast_image.dart';
 import '../widgets/transparent_app_bar.dart';
 import 'episode_list.dart';
 
@@ -68,8 +68,6 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
   }
 
   void _showDetails(BuildContext context, Podcast podcast) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return EpisodeListScreen(podcast.id, widget.api);
-    }));
+    PageRouter.of(context).pushNamed('/podcast/${podcast.id}');
   }
 }

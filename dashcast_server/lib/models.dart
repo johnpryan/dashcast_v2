@@ -58,11 +58,13 @@ class Episode {
   final int id;
   final String title;
   final String audioUrl;
+  Podcast podcast;
 
   Episode({
     this.id,
     this.title,
     this.audioUrl,
+    this.podcast,
   });
 
   factory Episode.fromJson(Map<String, dynamic> json) =>

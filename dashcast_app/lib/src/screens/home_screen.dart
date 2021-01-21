@@ -5,6 +5,7 @@ import 'package:dashcast_app/src/widgets/podcast_row.dart';
 import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
+import 'package:page_router/page_router.dart';
 
 import '../api.dart';
 import 'episode_list.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool loading;
+  bool isLoading;
   List<Podcast> podcasts;
 
   void initState() {
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
+    if (isLoading) {
       return Scaffold(
         appBar: TransparentAppBar(),
         body: Center(
@@ -74,24 +75,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future _loadPodcasts() async {
     setState(() {
-      loading = true;
+      isLoading = true;
     });
     var podcasts = await widget.api.getAll();
     setState(() {
       this.podcasts = podcasts;
-      loading = false;
+      isLoading = false;
     });
   }
 
   void _showDetails(BuildContext context, Podcast podcast) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return EpisodeListScreen(podcast.id, widget.api);
-    }));
+    PageRouter.of(context).pushNamed('/podcast/${podcast.id}');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+    //   return EpisodeListScreen(podcast.id, widget.api);
+    // }));
   }
 
   void _handleSeeAll() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return PodcastListScreen(widget.api);
-    }));
+    PageRouter.of(context).pushNamed('/all');
   }
 }

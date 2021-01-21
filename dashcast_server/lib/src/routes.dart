@@ -47,6 +47,16 @@ class DashcastService {
         headers: {'Content-Type': 'application/json'});
   }
 
+  @Route.get('/podcast/<id>/episode/<episodeId>')
+  Future<Response> getEpisode(Request request, String id, String episodeId) async {
+    var podcast = podcasts.firstWhere((p) => '${p.id}' == id);
+    var episode = podcast.episodes.firstWhere((e) => '${e.id}' == episodeId);
+
+    return Response(200,
+        body: json.encode(episode),
+        headers: {'Content-Type': 'application/json'});
+  }
+
   @Route.get('/podcast/<id>/image')
   Future<Response> getPodcastImage(Request request, String id) async {
     var file = imageFiles[int.parse(id)];

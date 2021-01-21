@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  page_router: ^0.0.1
   cupertino_icons: ^1.0.0
   dashcast_server:
     path: ../dashcast_server

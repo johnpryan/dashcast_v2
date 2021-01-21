@@ -51,6 +51,9 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     title: json['title'] as String,
     audioUrl: json['audioUrl'] as String,
+    podcast: json['podcast'] == null
+        ? null
+        : Podcast.fromJson(json['podcast'] as Map<String, dynamic>),
   );
 }
 
@@ -58,6 +61,7 @@ Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'audioUrl': instance.audioUrl,
+      'podcast': instance.podcast,
     };
 
 PodcastListResponse _$PodcastListResponseFromJson(Map<String, dynamic> json) {

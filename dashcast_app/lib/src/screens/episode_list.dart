@@ -1,6 +1,7 @@
 import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
+import 'package:page_router/page_router.dart';
 
 import '../api.dart';
 import '../widgets/podcast_image.dart';
@@ -70,16 +71,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
   }
 
   void _showEpisodeDetails(Podcast podcast, Episode episode) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          return EpisodeScreen(
-            api: widget.api,
-            podcast: podcast,
-            episode: episode,
-          );
-        },
-      ),
-    );
+    PageRouter.of(context)
+        .pushNamed('/podcast/${podcast.id}/episode/${episode.id}');
   }
 }

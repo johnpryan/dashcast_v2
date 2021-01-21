@@ -20,6 +20,11 @@ class DashcastApi {
     return PodcastDetails.fromJson(json.decode(response.body));
   }
 
+  Future<Episode> getEpisode(int podcastId, int episodeId) async {
+    var response = await _request('podcast/$podcastId/episode/$episodeId');
+    return Episode.fromJson(json.decode(response.body));
+  }
+
   Future<http.Response> _request(String path) async {
     var uri = baseUri.replace(path: path);
     var response = await http.get(uri);

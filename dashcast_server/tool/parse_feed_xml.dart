@@ -29,5 +29,8 @@ Future main(List<String> parameters) async {
       rssFeedUrl: uri.toString(),
       imageUrl: podcastXml.imageUrl,
       episodes: episodes);
+  for (var episode in episodes) {
+    episode.podcast = Podcast.fromDetails(podcast);
+  }
   print(json.encode(podcast));
 }

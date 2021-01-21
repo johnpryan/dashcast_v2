@@ -240,6 +240,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
+  page_router:
+    dependency: "direct main"
+    description:
+      name: page_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   path:
     dependency: "direct main"
     description:
@@ -324,6 +331,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.3.3"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.5"
   recase:
     dependency: transitive
     description:
@@ -420,6 +434,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  trie_router:
+    dependency: transitive
+    description:
+      name: trie_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   typed_data:
     dependency: transitive
     description:

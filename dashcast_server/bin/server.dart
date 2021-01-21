@@ -108,8 +108,8 @@ Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
     var episodes = <Episode>[];
     for (var i = 0; i < podcastXml.episodes.length; i++) {
       var episodeXml = podcastXml.episodes[i];
-      var e =
-      Episode(id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
+      var e = Episode(
+          id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
       episodes.add(e);
     }
 
@@ -120,8 +120,13 @@ Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
         imageUrl: podcastXml.imageUrl,
         link: podcastXml.link,
         episodes: episodes);
+
+    for (var episode in episodes) {
+      episode.podcast = Podcast.fromDetails(podcast);
+    }
+
     return podcast;
-  } catch(e) {
+  } catch (e) {
     print('error loading podcast: $podcastUrl');
   }
 }
