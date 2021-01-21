@@ -3,7 +3,6 @@ import 'package:dashcast_app/src/widgets/podcast_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dashcast_server/models.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PodcastListTile extends StatelessWidget {
   final DashcastApi api;
