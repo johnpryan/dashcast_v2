@@ -48,61 +48,59 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
     return Scaffold(
       appBar: TransparentAppBar(),
       body: SingleChildScrollView(
-        child: CenterScrollable(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: PodcastImage(api: widget.api, podcast: episode.podcast),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: PodcastImage(api: widget.api, podcast: episode.podcast),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${episode.title}',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.openSans().copyWith(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '${episode.title}',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.openSans().copyWith(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              // TODO: link widget
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Link(
-                  uri: Uri.parse(episode.podcast.link),
-                  builder: (context, followLink) {
-                    return TextButton(
-                      onPressed: followLink,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${episode.podcast.title}',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.openSans().copyWith(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.blue,
-                          ),
+            ),
+            // TODO: link widget
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Link(
+                uri: Uri.parse(episode.podcast.link),
+                builder: (context, followLink) {
+                  return TextButton(
+                    onPressed: followLink,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${episode.podcast.title}',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans().copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue,
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: AudioPlayer(
-                    audioUrl: widget.api
-                        .getAudioUrl(widget.podcastId, widget.episodeId)),
-              ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AudioPlayer(
+                  audioUrl: widget.api
+                      .getAudioUrl(widget.podcastId, widget.episodeId)),
+            ),
+          ],
         ),
       ),
     );

@@ -42,12 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: CenterScrollable(
-        child: Column(
-          children: [
-            PodcastRow(
+      body: Column(
+        children: [
+          PodcastRow(
+            api: widget.api,
+            label: 'Recommended',
+            podcasts: podcasts,
+            onSelected: (podcast) => _showDetails(context, podcast),
+            actionLabel: TextButton(
+              onPressed: _handleSeeAll,
+              child: Text('See all'),
+            ),
+          ),
+          Expanded(
+            child: PodcastColumn(
               api: widget.api,
-              label: 'Recommended',
+              label: "Dash's picks",
               podcasts: podcasts,
               onSelected: (podcast) => _showDetails(context, podcast),
               actionLabel: TextButton(
@@ -55,20 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('See all'),
               ),
             ),
-            Expanded(
-              child: PodcastColumn(
-                api: widget.api,
-                label: "Dash's picks",
-                podcasts: podcasts,
-                onSelected: (podcast) => _showDetails(context, podcast),
-                actionLabel: TextButton(
-                  onPressed: _handleSeeAll,
-                  child: Text('See all'),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

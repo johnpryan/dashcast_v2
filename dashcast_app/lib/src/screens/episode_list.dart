@@ -6,7 +6,6 @@ import 'package:page_router/page_router.dart';
 import '../api.dart';
 import '../widgets/podcast_image.dart';
 import '../widgets/transparent_app_bar.dart';
-import 'episode_screen.dart';
 
 class EpisodeListScreen extends StatefulWidget {
   final int podcastId;
@@ -39,22 +38,20 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: CenterScrollable(
-        child: ListView.builder(
-          itemBuilder: (context, idx) {
-            var episode = podcastDetails.episodes[idx];
-            return ListTile(
-              leading: PodcastImage(
-                api: widget.api,
-                podcast: podcastDetails,
-                thumbnail: true,
-              ),
-              title: Text(episode.title),
-              onTap: () => _showEpisodeDetails(podcastDetails, episode),
-            );
-          },
-          itemCount: podcastDetails.episodes.length,
-        ),
+      body: ListView.builder(
+        itemBuilder: (context, idx) {
+          var episode = podcastDetails.episodes[idx];
+          return ListTile(
+            leading: PodcastImage(
+              api: widget.api,
+              podcast: podcastDetails,
+              thumbnail: true,
+            ),
+            title: Text(episode.title),
+            onTap: () => _showEpisodeDetails(podcastDetails, episode),
+          );
+        },
+        itemCount: podcastDetails.episodes.length,
       ),
     );
   }
