@@ -1,10 +1,10 @@
 import 'package:dashcast_app/src/api.dart';
-import 'package:dashcast_app/src/widgets/podcast_large.dart';
-import 'package:dashcast_app/src/widgets/podcast_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dashcast_server/models.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'podcast_list.dart';
+import 'section_header.dart';
 
 class PodcastColumn extends StatelessWidget {
   final DashcastApi api;
@@ -25,37 +25,19 @@ class PodcastColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: GoogleFonts.openSans().copyWith(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              if (actionLabel != null) actionLabel,
-            ],
-          ),
+        SectionHeader(
+          label: label,
+          actionLabel: actionLabel,
         ),
         Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, idx) {
-              return PodcastListTile(
-                api: api,
-                podcast: podcasts[idx],
-                onTap: () => onSelected(podcasts[idx]),
-              );
-            },
-            itemCount: podcasts.length,
+          child: PodcastList(
+            api: api,
+            podcasts: podcasts,
+            onSelected: onSelected,
           ),
         ),
       ],
     );
   }
 }
+

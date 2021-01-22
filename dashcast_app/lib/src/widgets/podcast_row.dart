@@ -3,7 +3,8 @@ import 'package:dashcast_app/src/widgets/podcast_large.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dashcast_server/models.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import 'section_header.dart';
 
 class PodcastRow extends StatelessWidget {
   final DashcastApi api;
@@ -11,6 +12,7 @@ class PodcastRow extends StatelessWidget {
   final List<Podcast> podcasts;
   final ValueChanged onSelected;
   final Widget actionLabel;
+  final double height;
 
   PodcastRow({
     this.api,
@@ -18,6 +20,7 @@ class PodcastRow extends StatelessWidget {
     this.podcasts,
     this.onSelected,
     this.actionLabel,
+    this.height,
   });
 
   @override
@@ -25,26 +28,12 @@ class PodcastRow extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: GoogleFonts.openSans().copyWith(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              if (actionLabel != null) actionLabel,
-            ],
-          ),
+        SectionHeader(
+          label: label,
+          actionLabel: actionLabel,
         ),
-        // TODO: remove constrained box
         ConstrainedBox(
-          constraints: BoxConstraints.tightFor(height: 200),
+          constraints: BoxConstraints(maxHeight: height),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, idx) {

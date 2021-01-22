@@ -1,5 +1,3 @@
-import 'package:dashcast_app/src/screens/podcast_list.dart';
-import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_app/src/widgets/podcast_column.dart';
 import 'package:dashcast_app/src/widgets/podcast_row.dart';
 import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:page_router/page_router.dart';
 
 import '../api.dart';
-import 'episode_list.dart';
 
 class HomeScreen extends StatefulWidget {
   final DashcastApi api;
@@ -53,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: _handleSeeAll,
               child: Text('See all'),
             ),
+            height: 200,
           ),
           Expanded(
             child: PodcastColumn(

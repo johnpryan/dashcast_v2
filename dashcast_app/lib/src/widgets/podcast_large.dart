@@ -9,42 +9,37 @@ class PodcastLarge extends StatelessWidget {
   final DashcastApi api;
   final Podcast podcast;
   final VoidCallback onTap;
-  final BoxConstraints constraints;
 
   PodcastLarge({
     this.api,
     this.podcast,
     this.onTap,
-    this.constraints = const BoxConstraints.tightFor(width: 120),
   });
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: constraints,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: PodcastImage(
-              api: api,
-              podcast: podcast,
-              onTap: onTap,
-              thumbnail: true,
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: PodcastImage(
+            api: api,
+            podcast: podcast,
+            onTap: onTap,
+            thumbnail: true,
           ),
-          Text(
-            podcast.title,
-            style: GoogleFonts.openSans().copyWith(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+        ),
+        Text(
+          podcast.title,
+          style: GoogleFonts.openSans().copyWith(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }
