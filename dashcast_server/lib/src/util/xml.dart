@@ -1,5 +1,7 @@
 import 'package:xml/xml.dart';
 
+import 'date.dart';
+
 /// Extracts podcast data from an RSS feed.
 class PodcastXml {
   final XmlDocument _document;
@@ -12,8 +14,7 @@ class PodcastXml {
   String get imageUrl =>
       _channel.findElements('image').first.findElements('url').first.text;
 
-  String get link =>
-      _channel.findElements('link').first.text;
+  String get link => _channel.findElements('link').first.text;
 
   List<EpisodeXml> get episodes {
     return _channel.findElements('item').map((n) => EpisodeXml(n)).toList();
@@ -29,6 +30,10 @@ class EpisodeXml {
   EpisodeXml(XmlNode node) : _node = node;
 
   String get title => _node.findElements('title').first.text;
+
+  DateTime get publishDate => parseDate(publishDateString);
+
+  String get publishDateString => _node.findElements('pubDate').first.text;
 
   String get audioUrl => _node
       .findElements('enclosure')

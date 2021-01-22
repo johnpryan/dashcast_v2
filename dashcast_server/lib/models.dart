@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:timeago/timeago.dart' as timeago;
+
 part 'models.g.dart';
 
 @JsonSerializable()
@@ -58,14 +60,18 @@ class Episode {
   final int id;
   final String title;
   final String audioUrl;
+  DateTime publishDate;
   Podcast podcast;
 
   Episode({
     this.id,
     this.title,
     this.audioUrl,
+    this.publishDate,
     this.podcast,
   });
+
+  String get timeAgoDate => publishDate == null ? null : timeago.format(publishDate);
 
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);

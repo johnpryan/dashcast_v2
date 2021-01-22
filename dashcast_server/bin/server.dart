@@ -133,7 +133,18 @@ Future<PodcastDetails> _loadPodcast(String podcastUrl, int id) async {
     for (var i = 0; i < podcastXml.episodes.length; i++) {
       var episodeXml = podcastXml.episodes[i];
       var e = Episode(
-          id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
+          id: i,
+          title: episodeXml.title,
+          audioUrl: episodeXml.audioUrl,
+          publishDate: episodeXml.publishDate);
+      if (e.publishDate == null) {
+        print('unable to parse date ${episodeXml.publishDateString}');
+      }
+
+      // Introduce a bug!
+      if (i == 0) {
+        e.publishDate = null;
+      }
       episodes.add(e);
     }
 

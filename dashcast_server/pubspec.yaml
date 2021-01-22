@@ -15,10 +15,13 @@ dependencies:
   image: any
   shelf_static: any
   shelf_helpers: any
+  http: any
+  intl: any
+  timeago: any
 
 dev_dependencies:
   pedantic: ^1.9.0
   build_runner: any
   json_serializable: any
   shelf_router_generator: any
-  http: any
+  test: any

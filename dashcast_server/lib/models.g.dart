@@ -51,6 +51,9 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     title: json['title'] as String,
     audioUrl: json['audioUrl'] as String,
+    publishDate: json['publishDate'] == null
+        ? null
+        : DateTime.parse(json['publishDate'] as String),
     podcast: json['podcast'] == null
         ? null
         : Podcast.fromJson(json['podcast'] as Map<String, dynamic>),
@@ -61,6 +64,7 @@ Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'audioUrl': instance.audioUrl,
+      'publishDate': instance.publishDate?.toIso8601String(),
       'podcast': instance.podcast,
     };
 

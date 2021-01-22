@@ -81,11 +81,6 @@ docker tag dashcast gcr.io/dashcast/dashcast-container
 docker push gcr.io/dashcast/dashcast-container
 ```
 
-```
-gcloud compute instances update-container dashcast-vm \
-    --container-image gcr.io/dashcast/dashcast-container:latest
-```
-
 Update instance group:
 
 ```

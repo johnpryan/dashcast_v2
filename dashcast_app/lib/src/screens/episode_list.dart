@@ -48,6 +48,7 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
               thumbnail: true,
             ),
             title: Text(episode.title),
+            subtitle: Text(episode.timeAgoDate.toString()),
             onTap: () => _showEpisodeDetails(podcastDetails, episode),
           );
         },

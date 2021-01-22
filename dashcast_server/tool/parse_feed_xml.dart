@@ -18,8 +18,11 @@ Future main(List<String> parameters) async {
   var episodes = <Episode>[];
   for (var i = 0; i < podcastXml.episodes.length; i++) {
     var episodeXml = podcastXml.episodes[i];
-    var e =
-        Episode(id: i, title: episodeXml.title, audioUrl: episodeXml.audioUrl);
+    var e = Episode(
+        id: i,
+        title: episodeXml.title,
+        audioUrl: episodeXml.audioUrl,
+        publishDate: episodeXml.publishDate);
     episodes.add(e);
   }
 
