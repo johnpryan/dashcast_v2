@@ -8,7 +8,7 @@ import 'api.dart';
 import 'screens/episode_screen.dart';
 import 'screens/home_screen.dart';
 
-// final serverUri = Uri.parse('http://localhost:8080');
+// final serverUri = Uri.parse('http://0.0.0.0:8080');
 final serverUri = Uri.parse('https://dashcast.net/');
 
 class DashcastApp extends StatefulWidget {
