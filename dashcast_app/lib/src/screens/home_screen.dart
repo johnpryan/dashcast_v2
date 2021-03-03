@@ -1,3 +1,4 @@
+import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_app/src/widgets/podcast_column.dart';
 import 'package:dashcast_app/src/widgets/podcast_row.dart';
 import 'package:dashcast_app/src/widgets/transparent_app_bar.dart';
@@ -39,32 +40,34 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: Column(
-        children: [
-          PodcastRow(
-            api: widget.api,
-            label: 'Recommended',
-            podcasts: podcasts,
-            onSelected: (podcast) => _showDetails(context, podcast),
-            actionLabel: TextButton(
-              onPressed: _handleSeeAll,
-              child: Text('See all'),
-            ),
-            height: 200,
-          ),
-          Expanded(
-            child: PodcastColumn(
+      body: CenterScrollable(
+        child: Column(
+          children: [
+            PodcastRow(
               api: widget.api,
-              label: "Dash's picks",
+              label: 'Recommended',
               podcasts: podcasts,
               onSelected: (podcast) => _showDetails(context, podcast),
               actionLabel: TextButton(
                 onPressed: _handleSeeAll,
                 child: Text('See all'),
               ),
+              height: 200,
             ),
-          ),
-        ],
+            Expanded(
+              child: PodcastColumn(
+                api: widget.api,
+                label: "Dash's picks",
+                podcasts: podcasts,
+                onSelected: (podcast) => _showDetails(context, podcast),
+                actionLabel: TextButton(
+                  onPressed: _handleSeeAll,
+                  child: Text('See all'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

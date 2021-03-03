@@ -1,3 +1,4 @@
+import 'package:dashcast_app/src/widgets/center_scroll.dart';
 import 'package:dashcast_app/src/widgets/podcast_list_tile.dart';
 import 'package:dashcast_server/models.dart';
 import 'package:flutter/material.dart';
@@ -36,18 +37,20 @@ class _PodcastListScreenState extends State<PodcastListScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: ListView.builder(
-        itemBuilder: (context, idx) {
-          var podcast = podcasts[idx];
-          return PodcastListTile(
-            api: widget.api,
-            podcast: podcast,
-            onTap: () {
-              _showDetails(context, podcast);
-            },
-          );
-        },
-        itemCount: podcasts.length,
+      body: CenterScrollable(
+        child: ListView.builder(
+          itemBuilder: (context, idx) {
+            var podcast = podcasts[idx];
+            return PodcastListTile(
+              api: widget.api,
+              podcast: podcast,
+              onTap: () {
+                _showDetails(context, podcast);
+              },
+            );
+          },
+          itemCount: podcasts.length,
+        ),
       ),
     );
   }

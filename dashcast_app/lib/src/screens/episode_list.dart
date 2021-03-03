@@ -38,21 +38,23 @@ class _EpisodeListScreenState extends State<EpisodeListScreen> {
     }
     return Scaffold(
       appBar: TransparentAppBar(),
-      body: ListView.builder(
-        itemBuilder: (context, idx) {
-          var episode = podcastDetails.episodes[idx];
-          return ListTile(
-            leading: PodcastImage(
-              api: widget.api,
-              podcast: podcastDetails,
-              thumbnail: true,
-            ),
-            title: Text(episode.title),
-            subtitle: Text(episode.timeAgoDate.toString()),
-            onTap: () => _showEpisodeDetails(podcastDetails, episode),
-          );
-        },
-        itemCount: podcastDetails.episodes.length,
+      body: CenterScrollable(
+        child: ListView.builder(
+          itemBuilder: (context, idx) {
+            var episode = podcastDetails.episodes[idx];
+            return ListTile(
+              leading: PodcastImage(
+                api: widget.api,
+                podcast: podcastDetails,
+                thumbnail: true,
+              ),
+              title: Text(episode.title),
+              subtitle: Text(episode.timeAgoDate.toString()),
+              onTap: () => _showEpisodeDetails(podcastDetails, episode),
+            );
+          },
+          itemCount: podcastDetails.episodes.length,
+        ),
       ),
     );
   }
