@@ -1,5 +1,3 @@
-# DashCast v2
-
 Source code for
 [*From mobile app to web app*](https://www.youtube.com/watch?v=HAstl_NkXl0). 
 
