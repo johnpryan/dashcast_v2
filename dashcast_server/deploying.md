@@ -1,4 +1,5 @@
-**Note**: These instructions use Google Compute Engine, but 
+**Note**: These instructions use Google Compute Engine,
+but this is not the best way to run Dart servers on Google Cloud.
 
 ## Docker
 Build docker image:
